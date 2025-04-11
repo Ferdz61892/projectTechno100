@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Nights - 2600 Adventure</title>
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2a2a72;
+            --secondary: #ffcc00;
+            --accent: #2bff00;
+            --dark: #222;
+            --medium: #444;
+            --light: #fff;
+            --text: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* ===== Header Styles ===== */
+        header {
+            background-color: var(--primary);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: auto;
+        }
+        
+        .logo {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            vertical-align: middle;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 5px;
+        }
+        
+        .main-nav {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .main-nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .main-nav a.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .search-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .search-bar {
+            display: inline-flex;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background-color: #e6b800;
+        }
+        
+        /* ===== Page Header ===== */
+        .page-header {
+            background-color: var(--medium);
+            padding: 60px 0;
+            text-align: center;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/nightlife-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ===== Listings Section ===== */
+        .listings {
+            padding: 50px 0;
+            background-color: var(--dark);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            padding: 8px 15px;
+            background-color: var(--medium);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tag:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .filter-tag.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .venue-card {
+            background-color: var(--medium);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .venue-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .venue-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .venue-info {
+            padding: 20px;
+        }
+        
+        .venue-info h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .venue-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .venue-rating {
+            color: var(--secondary);
+        }
+        
+        .venue-type {
+            background-color: rgba(255,255,255,0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .venue-description {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .venue-links {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .menu-link, .reserve-link {
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-link {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        .menu-link:hover {
+            background-color: #1a1a5a;
+        }
+        
+        .reserve-link {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .reserve-link:hover {
+            background-color: #e6b800;
+        }
+        
+        /* Special nightlife elements */
+        .hours-row {
+            display: flex;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .hours-label {
+            font-weight: bold;
+            color: var(--secondary);
+            min-width: 80px;
+        }
+        
+        .hours-value {
+            flex: 1;
+        }
+        
+        .music-type {
+            display: inline-block;
+            background-color: rgba(43, 255, 0, 0.2);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-size: 0.8rem;
+        }
+        
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--primary);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--light);
+            border-radius: 50%;
+            margin: 0 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        footer p {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Loading State ===== */
+        .loading-card {
+            background-color: var(--medium);
+            border-radius: 8px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-tags {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .listing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .venue-card {
+                width: 100%;
+            }
+        }
+        
+        /* Detail rows for address and other info */
+        .detail-row {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .detail-value {
+            margin-top: 3px;
+        }
+        
+        .map-link {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .map-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-img">
+                <img src="images/26.jpeg" alt="2600 Adventure Logo" class="logo-icon">
+            </div>
+            <div class="logo">2600 Adventure</div>
+            <div class="tagline">Fuel your quest with 8-bit flavors</div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="hotels.html">Hotels</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="attractions.html">Attractions</a>
+                <a href="nightlife.html" class="active">Nightlife</a>
+                <a href="about.html">About</a>
+            </nav>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search nightlife venues...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h1>Neon Nights</h1>
+            <p>Experience Baguio's vibrant nightlife scene after the sun goes down</p>
+        </div>
+    </section>
+    
+    <section class="listings">
+        <div class="container">
+            <div class="filter-options">
+                <div class="filter-title">Filter by:</div>
+                <div class="filter-tags">
+                    <span class="filter-tag active">All</span>
+                    <span class="filter-tag">Bars</span>
+                    <span class="filter-tag">Clubs</span>
+                    <span class="filter-tag">Live Music</span>
+                    <span class="filter-tag">Karaoke</span>
+                    <span class="filter-tag">Lounges</span>
+                </div>
+            </div>
+            
+            <div class="listing-grid">
+                <!-- Venue Card 1 -->
+                <div class="venue-card">
+                    <img src="images/rou.jpg" alt="Rumours Bar" class="venue-img">
+                    <div class="venue-info">
+                        <h3>Rumours Bar</h3>
+                        <div class="venue-meta">
+                            <span class="venue-rating">★★★★☆ (4.3)</span>
+                            <span class="venue-type">Bar & Lounge</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-label">Hours:</span>
+                            <span class="hours-value">6:00 PM - 2:00 AM (Daily)</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Music:</div>
+                            <div class="detail-value">
+                                <span class="music-type">Pop</span>
+                                <span class="music-type">Rock</span>
+                                <span class="music-type">R&B</span>
+                            </div>
+                        </div>
+                        <p class="venue-description">A cozy yet lively bar with great cocktails and a relaxed atmosphere. Known for their friendly staff and occasional live acoustic performances.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Rumours+Bar+%26+Restaurant/@16.414167,120.5975,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a142b0ceb1b5:0xe3779dfe61ef62f8!8m2!3d16.4141619!4d120.6023709" target="_blank" class="map-link">
+                                    Lower Ground Floor, La Azotea Building, Session Road
+                                </a>
+                            </div>
+                        </div>
+                        <div class="venue-links">
+                            <a href="https://www.facebook.com/rumoursbaguio/" target="_blank" class="menu-link">View FB Page</a>
+                            <a href="#" class="reserve-link">Reserve Table</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Venue Card 2 -->
+                <div class="venue-card">
+                    <img src="images/Spade.jpg" alt="Spade Superclub" class="venue-img">
+                    <div class="venue-info">
+                        <h3>Spade Superclub</h3>
+                        <div class="venue-meta">
+                            <span class="venue-rating">★★★★☆ (3.7)</span>
+                            <span class="venue-type">Sports Bar</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-label">Hours:</span>
+                            <span class="hours-value">7:00 PM - 2:00 AM (Daily)</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Superclub:</div>
+                            <div class="detail-value">
+                            </div>
+                        </div>
+                        <p class="venue-description">​Spade Superclub, also known as Spade Bar Baguio, is a prominent nightlife destination located within the Crown Legacy Hotel at the corner of Montinola Street and Kisad Road in Baguio City.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Spade+Superclub/@16.4042824,120.5926329,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a16af408ea99:0xf8754acbab4f88c3!8m2!3d16.4042773!4d120.5952078!16s%2Fg%2F11c4dkkrgv?entry=ttu&g_ep=EgoyMDI1MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">
+                                    Baguio Crown Legacy Hotel, Corner Montinola Street, Kisad Road, Baguio, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="venue-links">
+                            <a href="https://www.facebook.com/baguiocrown/posts/spade-superclub-of-the-north-is-back-bigger-and-better-/1056507076483941//" target="_blank" class="menu-link">View FB Page</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Venue Card 3 -->
+                <div class="venue-card">
+                    <img src="images/Karma.jpg" alt="Karma by Drunken Chef" class="venue-img">
+                    <div class="venue-info">
+                        <h3>Karma by Drunken Chef</h3>
+                        <div class="venue-meta">
+                            <span class="venue-rating">★★★★★ (4.3)</span>
+                            <span class="venue-type">Club</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-label">Hours:</span>
+                            <span class="hours-value">11:00 PM - 3:00 AM (Daily)</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Music:</div>
+                            <div class="detail-value">
+                            </div>
+                        </div>
+                        <p class="venue-description"> A vibrant nightlife venue offers a dynamic atmosphere with live DJs, themed events, and a stylish interior, making it a popular spot for both locals and tourists seeking an energetic party scene</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Red+Lion+Pub/@16.414167,120.5975,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a142b0ceb1b5:0xe3779dfe61ef62f8!8m2!3d16.4141619!4d120.6023709" target="_blank" class="map-link">
+                                    16 Legarda Rd, Baguio, 2600 Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="venue-links">
+                            <a href="https://www.facebook.com/karmabydrunkenchef/" target="_blank" class="menu-link">View FB Page</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Venue Card 4 -->
+                <div class="venue-card">
+                    <img src="images/Amper.jpg" alt="The Ampersand" class="venue-img">
+                    <div class="venue-info">
+                        <h3>The Ampersand</h3>
+                        <div class="venue-meta">
+                            <span class="venue-rating">★★★★☆ (4.1)</span>
+                            <span class="venue-type">Nightclub</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-label">Hours:</span>
+                            <span class="hours-value">9:00 PM - 4:00 AM (Thu-Sat)</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Music:</div>
+                            <div class="detail-value">
+                                <span class="music-type">EDM</span>
+                                <span class="music-type">Hip Hop</span>
+                                <span class="music-type">Top 40</span>
+                            </div>
+                        </div>
+                        <p class="venue-description">Baguio's premier nightclub with a modern sound system and light show. Features guest DJs and themed party nights.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/The+Ampersand/@16.4117735,120.5794293,15z/data=!4m10!1m2!2m1!1sThe+Camp,+30+Leonard+Wood+Rd,+Baguio,+2600+Benguet!3m6!1s0x3391a15afaa7a23f:0xbad7c74f607af612!8m2!3d16.4129124!4d120.6063954!15sCjJUaGUgQ2FtcCwgMzAgTGVvbmFyZCBXb29kIFJkLCBCYWd1aW8sIDI2MDAgQmVuZ3VldFoxIi90aGUgY2FtcCAzMCBsZW9uYXJkIHdvb2QgcmQgYmFndWlvIDI2MDAgYmVuZ3VldJIBC2V2ZW50X3ZlbnVl4AEA!16s%2Fg%2F11b66gnwv1?entry=ttu&g_ep=EgoyMDI1MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">
+                                    The Camp, 30 Leonard Wood Rd, Baguio, 2600 Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="venue-links">
+                            <a href="https://www.facebook.com/theampersandbaguio/" target="_blank" class="menu-link">View FB Page</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Venue Card 5 -->
+                <div class="venue-card">
+                    <img src="images/Curfew.jpg" alt="Curfew by Drunken Chef Restobar" class="venue-img">
+                    <div class="venue-info">
+                        <h3>Curfew by Drunken Chef Restobar</h3>
+                        <div class="venue-meta">
+                            <span class="venue-rating">★★★★☆ (4.0)</span>
+                            <span class="venue-type">Alternative Bar</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="hours-label">Hours:</span>
+                            <span class="hours-value">6:00 PM - 2:00 AM (Wed-Sun)</span>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Music:</div>
+                            <div class="detail-value">
+                                <span class="music-type">Indie</span>
+                                <span class="music-type">Alternative</span>
+                                <span class="music-type">Live Bands</span>
+                            </div>
+                        </div>
+                        <p class="venue-description">A favorite among artists and musicians with its eclectic decor and support for local bands. Known for its creative cocktails.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Curfew+by+Drunken+Chef+Restobar/@16.4136326,120.6049318,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a1f85e930e85:0xc50b738de775451a!8m2!3d16.4136275!4d120.6075067!16s%2Fg%2F11shkh700s?entry=ttu&g_ep=EgoyMDI1MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">
+                                    35 Leonard Wood Rd, Baguio, 2600 Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="venue-links">
+                            <a href="https://www.facebook.com/people/Curfew-Bar/61563420231809/?_rdr" target="_blank" class="menu-link">View FB Page</a>
+                        </div>
+                    </div>
+                </div>
+                
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            
+            <p>&copy; 2023 2600 Adventure. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Sample JavaScript for filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTags = document.querySelectorAll('.filter-tag');
+            
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // Remove active class from all tags
+                    filterTags.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    
+                    // Here you would typically filter the venue listings
+                    // For now we'll just log the filter
+                    console.log(`Filtering by: ${this.textContent}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

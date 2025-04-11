@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - 2600 Adventure</title>
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2a2a72;
+            --secondary: #ffcc00;
+            --accent: #2bff00;
+            --dark: #222;
+            --medium: #444;
+            --light: #fff;
+            --text: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* ===== Header Styles ===== */
+        header {
+            background-color: var(--primary);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: auto;
+        }
+        
+        .logo {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            vertical-align: middle;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 5px;
+        }
+        
+        .main-nav {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .main-nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .main-nav a.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        /* ===== Page Header ===== */
+        .page-header {
+            background-color: var(--medium);
+            padding: 60px 0;
+            text-align: center;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/about-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ===== About Content ===== */
+        .about-content {
+            padding: 50px 0;
+            background-color: var(--dark);
+        }
+        
+        .about-section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--medium);
+            border-radius: 8px;
+        }
+        
+        .about-section h2 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .about-section p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        /* Team Members */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .team-member {
+            background-color: var(--medium);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            color: var(--secondary);
+            margin-bottom: 5px;
+            font-size: 1.3rem;
+        }
+        
+        .member-info p {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--primary);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--light);
+            border-radius: 50%;
+            margin: 0 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        footer p {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-img">
+                <img src="images/26.jpeg" alt="2600 Adventure Logo" class="logo-icon">
+            </div>
+            <div class="logo">2600 Adventure</div>
+            <div class="tagline">Fuel your quest with 8-bit flavors</div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="hotels.html">Hotels</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="attractions.html">Attractions</a>
+                <a href="nightlife.html">Nightlife</a>
+                <a href="about.html" class="active">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h1>About Our Team</h1>
+            <p>Get to know the people behind 2600 Adventure</p>
+        </div>
+    </section>
+    
+    <section class="about-content">
+        <div class="container">
+            <div class="about-section">
+                <h2>Our Story</h2>
+                <p>Welcome to 2600 Adventure, your ultimate guide to exploring Baguio City's rich culture, delicious cuisine, and breathtaking attractions. We're passionate about helping visitors and locals alike discover the best experiences this beautiful mountain city has to offer.</p>
+                <p>We created this project for Techno Peach as part of our web development initiative, combining our love for Baguio with our technical skills to build a comprehensive travel resource.</p>
+                <p>Our mission is to provide accurate, up-to-date information about Baguio's hotels, restaurants, attractions, and nightlife, making trip planning easier and more enjoyable for everyone.</p>
+            </div>
+            
+            <div class="about-section">
+                <h2>Meet The Team</h2>
+                <p>Our dedicated team of developers and designers worked tirelessly to bring you this platform:</p>
+                
+                <div class="team-grid">
+                    <!-- Team Member 1 -->
+                    <div class="team-member">
+                        <img src="images/team1.jpg" alt="Tapel, Melqui Melea R." class="member-img">
+                        <div class="member-info">
+                            <h3>Tapel, Melqui Melea R.</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 2 -->
+                    <div class="team-member">
+                        <img src="images/team2.jpg" alt="Eheta, Ferdinand" class="member-img">
+                        <div class="member-info">
+                            <h3>Eheta, Ferdinand</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 3 -->
+                    <div class="team-member">
+                        <img src="images/team3.jpg" alt="Suliman, Azam" class="member-img">
+                        <div class="member-info">
+                            <h3>Suliman, Azam</h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 4 -->
+                    <div class="team-member">
+                        <img src="images/team4.jpg" alt="Gamboa, Kristal Patiwi" class="member-img">
+                        <div class="member-info">
+                            <h3>Gamboa, Kristal Patiwi</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-section">
+                <h2>Our Vision</h2>
+                <p>We believe that everyone should have access to reliable information when planning their Baguio adventures. Our platform is designed to be user-friendly, comprehensive, and constantly updated with the latest information about the city.</p>
+                <p>As we continue to grow, we aim to add more features like user reviews, personalized recommendations, and interactive maps to make your Baguio experience even better.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; Basta kalbo, walang buhok sa ulo.</p>
+            <p>Shock Knee The Dim</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

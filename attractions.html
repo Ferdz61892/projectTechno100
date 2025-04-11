@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Adventures - 2600 Adventure</title>
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2a2a72;
+            --secondary: #ffcc00;
+            --accent: #2bff00;
+            --dark: #222;
+            --medium: #444;
+            --light: #fff;
+            --text: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* ===== Header Styles ===== */
+        header {
+            background-color: var(--primary);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: auto;
+        }
+        
+        .logo {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            vertical-align: middle;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 5px;
+        }
+        
+        .main-nav {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .main-nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .main-nav a.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .search-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .search-bar {
+            display: inline-flex;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background-color: #e6b800;
+        }
+        
+        /* ===== Page Header ===== */
+        .page-header {
+            background-color: var(--medium);
+            padding: 60px 0;
+            text-align: center;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/attractions-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ===== Listings Section ===== */
+        .listings {
+            padding: 50px 0;
+            background-color: var(--dark);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            padding: 8px 15px;
+            background-color: var(--medium);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tag:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .filter-tag.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .attraction-card {
+            background-color: var(--medium);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .attraction-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .attraction-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .attraction-info {
+            padding: 20px;
+        }
+        
+        .attraction-info h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .attraction-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .attraction-rating {
+            color: var(--secondary);
+        }
+        
+        .attraction-type {
+            background-color: rgba(255,255,255,0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .attraction-description {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .attraction-links {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .info-link, .book-link {
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .info-link {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        .info-link:hover {
+            background-color: #1a1a5a;
+        }
+        
+        .book-link {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .book-link:hover {
+            background-color: #e6b800;
+        }
+        
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--primary);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--light);
+            border-radius: 50%;
+            margin: 0 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        footer p {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Loading State ===== */
+        .loading-card {
+            background-color: var(--medium);
+            border-radius: 8px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-tags {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .listing-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .attraction-card {
+                width: 100%;
+            }
+        }
+        
+        /* Detail rows for address and other info */
+        .detail-row {
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .detail-value {
+            margin-top: 3px;
+        }
+        
+        .map-link {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .map-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-img">
+                <img src="images/26.jpeg" alt="2600 Adventure Logo" class="logo-icon">
+            </div>
+            <div class="logo">2600 Adventure</div>
+            <div class="tagline">Fuel your quest with 8-bit flavors</div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="hotels.html">Hotels</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="attractions.html" class="active">Attractions</a>
+                <a href="nightlife.html">Nightlife</a>
+                <a href="about.html">About</a>
+            </nav>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search attractions...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h1>Retro Adventures</h1>
+            <p>Discover must-see attractions that will make your Baguio visit unforgettable</p>
+        </div>
+    </section>
+    
+    <section class="listings">
+        <div class="container">
+            <div class="filter-options">
+                <div class="filter-title">Filter by:</div>
+                <div class="filter-tags">
+                    <span class="filter-tag active">All</span>
+                    <span class="filter-tag">Nature</span>
+                    <span class="filter-tag">Cultural</span>
+                    <span class="filter-tag">Historical</span>
+                    <span class="filter-tag">Family</span>
+                    <span class="filter-tag">Adventure</span>
+                </div>
+            </div>
+            
+            <div class="listing-grid">
+                <!-- Attraction Card 1 -->
+                <div class="attraction-card">
+                    <img src="images/Bh.jpg" alt="Burnham Park" class="attraction-img">
+                    <div class="attraction-info">
+                        <h3>Burnham Park</h3>
+                        <div class="attraction-meta">
+                            <span class="attraction-rating">★★★★☆ (4.5)</span>
+                            <span class="attraction-type">Nature & Recreation</span>
+                        </div>
+                        <p class="attraction-description">The iconic heart of Baguio featuring a man-made lake, flower gardens, skating rink, and various recreational activities in a sprawling green space.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Burnham+Park/@16.411748,120.5871541,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a168c625a37d:0x198f476f87d2c588!8m2!3d16.4117429!4d120.592025" target="_blank" class="map-link">
+                                    Jose Abad Santos Dr, Baguio, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Hours:</div>
+                            <div class="detail-value">Open 24 hours</div>
+                        </div>
+                        <div class="attraction-links">
+                            <a href="https://guidetothephilippines.ph/destinations-and-attractions/burnham-park" target="_blank" class="info-link">More Info</a>
+                    </div>
+                </div>
+            </div>
+                <!-- Attraction Card 2 -->
+                <div class="attraction-card">
+                    <img src="images/MV.jpg" alt="Mines View Park" class="attraction-img">
+                    <div class="attraction-info">
+                        <h3>Mines View Park</h3>
+                        <div class="attraction-meta">
+                            <span class="attraction-rating">★★★★☆ (4.2)</span>
+                            <span class="attraction-type">Scenic Viewpoint</span>
+                        </div>
+                        <p class="attraction-description">Offers a breathtaking panoramic view of the Benguet mountains and the abandoned gold and copper mines of Itogon.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Mines+View+Park/@16.4215467,120.6234693,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a0f5e3a4e2b5:0x3e5d9c8d1a1b3b0d!8m2!3d16.4215416!4d120.6283402" target="_blank" class="map-link">
+                                    Gibraltar Rd, Baguio, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Hours:</div>
+                            <div class="detail-value">6:00 AM - 6:00 PM daily</div>
+                        </div>
+                        <div class="attraction-links">
+                            <a href="https://www.baguio.gov.ph/tourism/mines-view-park" target="_blank" class="info-link">More Info</a>
+                            <a href="#" class="book-link">Book Activities</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attraction Card 3 -->
+                <div class="attraction-card">
+                    <img src="images/IK.jpg" alt="Igorot Stone Kingdom Inc." class="attraction-img">
+                    <div class="attraction-info">
+                        <h3>Igorot Stone Kingdom Inc.</h3>
+                        <div class="attraction-meta">
+                            <span class="attraction-rating">★★★★★ (4.7)</span>
+                            <span class="attraction-type">Nature & Recreation</span>
+                        </div>
+                        <p class="attraction-description">The Igorot Stone Kingdom is a cultural park located in Pinsao Proper Village, Baguio City. It's known for its towering stone terraces, symbolic structures, and impressive craftsmanship that celebrate the rich heritage of the Igorot people. The site was built to honor the traditions and resilience of the Igorot culture</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Igorot+Stone+Kingdom+Inc./@16.431571,120.5725105,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a3e931948e1f:0x992084ab1a61b3ff!8m2!3d16.4315659!4d120.5750854!16s%2Fg%2F11rc9lm0kg?entry=ttu&g_ep=EgoyMDI1MDQwOC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">
+                                    Long Long Benguet Rd, Baguio, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Hours:</div>
+                            <div class="detail-value">6:00 AM - 10:00 PM daily</div>
+                        </div>
+                        <div class="attraction-links">
+                            <a href="https://lakbaypinas.com/guide-to-igorot-stone-kingdom-in-baguio-city/" target="_blank" class="info-link">More Info</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attraction Card 4 -->
+                <div class="attraction-card">
+                    <img src="images/BC.jpg" alt="BenCab Museum" class="attraction-img">
+                    <div class="attraction-info">
+                        <h3>BenCab Museum</h3>
+                        <div class="attraction-meta">
+                            <span class="attraction-rating">★★★★★ (4.8)</span>
+                            <span class="attraction-type">Cultural</span>
+                        </div>
+                        <p class="attraction-description">Showcases the works of National Artist Benedicto Cabrera and other contemporary Filipino artists, with a beautiful garden and café.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/BenCab+Museum/@16.358611,120.705,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a3a3a3a3a3a3:0x3e5d9c8d1a1b3b0d!8m2!3d16.3586059!4d120.7098709" target="_blank" class="map-link">
+                                    Km. 6 Asin Rd, Tuba, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Hours:</div>
+                            <div class="detail-value">9:00 AM - 6:00 PM (Closed Mondays)</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Entrance Fee:</div>
+                            <div class="detail-value">₱150 for adults, ₱120 for students/seniors</div>
+                        </div>
+                        <div class="attraction-links">
+                            <a href="https://www.bencabmuseum.org/" target="_blank" class="info-link">More Info</a>
+                            <a href="#" class="book-link">Book Tickets</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attraction Card 5 -->
+                <div class="attraction-card">
+                    <img src="images/TAM.jpg" alt="Tam-Awan Village" class="attraction-img">
+                    <div class="attraction-info">
+                        <h3>Tam-Awan Village</h3>
+                        <div class="attraction-meta">
+                            <span class="attraction-rating">★★★★☆ (4.3)</span>
+                            <span class="attraction-type">Cultural</span>
+                        </div>
+                        <p class="attraction-description">A reconstructed Cordillera village showcasing traditional Ifugao huts, art galleries, and cultural performances in a serene setting.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Tam-Awan+Village/@16.423611,120.593056,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a168a932c641:0x7fed6b7d653057f!8m2!3d16.4236059!4d120.5979269" target="_blank" class="map-link">
+                                    366-C Pinsao Proper, Baguio, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Hours:</div>
+                            <div class="detail-value">8:00 AM - 6:00 PM daily</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Entrance Fee:</div>
+                            <div class="detail-value">₱60 for adults, ₱50 for students/seniors</div>
+                        </div>
+                        <div class="attraction-links">
+                            <a href="https://www.tam-awanvillage.com/" target="_blank" class="info-link">More Info</a>
+                            <a href="#" class="book-link">Book Tickets</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attraction Card 6 -->
+                <div class="attraction-card">
+                    <img src="images/Lion.jpg" alt="Lion's Head" class="attraction-img">
+                    <div class="attraction-info">
+                        <h3>Lion's Head</h3>
+                        <div class="attraction-meta">
+                            <span class="attraction-rating">★★★★☆ (4.0)</span>
+                            <span class="attraction-type">Landmark</span>
+                        </div>
+                        <p class="attraction-description">An iconic lion's head sculpture carved into the mountainside along Kennon Road, serving as a popular photo stop and symbol of Baguio.</p>
+                        
+                        <div class="detail-row">
+                            <div class="detail-label">Address:</div>
+                            <div class="detail-value">
+                                <a href="https://www.google.com/maps/place/Lion's+Head/@16.373611,120.588056,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a168a932c641:0x7fed6b7d653057f!8m2!3d16.3736059!4d120.5929269" target="_blank" class="map-link">
+                                    Kennon Rd, Baguio, Benguet
+                                </a>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Hours:</div>
+                            <div class="detail-value">Open 24 hours</div>
+                        </div>
+                        <div class="attraction-links">
+                            <a href="https://www.baguio.gov.ph/tourism/lions-head" target="_blank" class="info-link">More Info</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            
+            <div class="container">
+                <p>&copy; Basta kalbo, walang buhok sa ulo.</p>
+                <p>Shock Knee The Dim</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </footer>
+
+    <script>
+        // Sample JavaScript for filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTags = document.querySelectorAll('.filter-tag');
+            
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // Remove active class from all tags
+                    filterTags.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    
+                    // Here you would typically filter the attraction listings
+                    // For now we'll just log the filter
+                    console.log(`Filtering by: ${this.textContent}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

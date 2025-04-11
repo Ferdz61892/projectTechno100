@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Eats - 2600 Adventure</title>
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --primary: #2a2a72;
+            --secondary: #ffcc00;
+            --accent: #2bff00;
+            --dark: #222;
+            --medium: #444;
+            --light: #fff;
+            --text: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* ===== Header Styles ===== */
+        header {
+            background-color: var(--primary);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .logo-img {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 15px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: auto;
+        }
+        
+        .logo {
+            display: inline-block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+            vertical-align: middle;
+        }
+        
+        .tagline {
+            font-size: 1rem;
+            color: var(--text);
+            margin-top: 5px;
+        }
+        
+        .main-nav {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .main-nav a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .main-nav a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .main-nav a.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .search-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .search-bar {
+            display: inline-flex;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        
+        .search-bar button:hover {
+            background-color: #e6b800;
+        }
+        
+        /* ===== Page Header ===== */
+        .page-header {
+            background-color: var(--medium);
+            padding: 60px 0;
+            text-align: center;
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('images/restaurant-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* ===== Listings Section ===== */
+        .listings {
+            padding: 50px 0;
+            background-color: var(--dark);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .filter-title {
+            font-size: 1.2rem;
+            color: var(--secondary);
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-tag {
+            padding: 8px 15px;
+            background-color: var(--medium);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-tag:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .filter-tag.active {
+            background-color: var(--secondary);
+            color: var(--dark);
+            font-weight: bold;
+        }
+        
+        .listing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .restaurant-card {
+            background-color: var(--medium);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .restaurant-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .restaurant-info {
+            padding: 20px;
+        }
+        
+        .restaurant-info h3 {
+            font-size: 1.4rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .restaurant-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .restaurant-rating {
+            color: var(--secondary);
+        }
+        
+        .restaurant-cuisine {
+            background-color: rgba(255,255,255,0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .restaurant-description {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .restaurant-links {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .menu-link, .reserve-link {
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-link {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+        
+        .menu-link:hover {
+            background-color: #1a1a5a;
+        }
+        
+        .reserve-link {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .reserve-link:hover {
+            background-color: #e6b800;
+        }
+        
+        /* ===== Footer ===== */
+        footer {
+            background-color: var(--primary);
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: var(--light);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--light);
+            border-radius: 50%;
+            margin: 0 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        footer p {
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== Loading State ===== */
+        .loading-card {
+            background-color: var(--medium);
+            border-radius: 8px;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loading-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* ===== Responsive Design ===== */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header p {
+                font-size: 1rem;
+            }
+            
+            .filter-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-tags {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            .menu-preview {
+    margin: 10px 0;
+    cursor: pointer;
+}
+.menu-preview img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.menu-preview small {
+    display: block;
+    color: #666;
+}
+.listing-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* set to wrap if you want to wrap on small screens */
+    padding: 2rem;
+}
+
+.restaurant-card {
+    background: #333;
+    color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.restaurant-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.restaurant-info {
+    padding: 1rem;
+}
+
+.restaurant-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.restaurant-links {
+    margin-top: 1rem;
+}
+
+.menu-link {
+    display: inline-block;
+    background-color: #2f2fff;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo-img">
+                <img src="images/26.jpeg" alt="2600 Adventure Logo" class="logo-icon">
+            </div>
+            <div class="logo">2600 Adventure</div>
+            <div class="tagline">Fuel your quest with 8-bit flavors</div>
+            
+            <nav class="main-nav">
+                <a href="index.html">Home</a>
+                <a href="hotels.html">Hotels</a>
+                <a href="restaurants.html" class="active">Restaurants</a>
+                <a href="attractions.html">Attractions</a>
+                <a href="nightlife.html">Nightlife</a>
+                <a href="about.html">About</a>
+            </nav>
+            
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search restaurants...">
+                    <button>Search</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="page-header">
+        <div class="container">
+            <h1>Retro Eats & Treats</h1>
+            <p>Discover dining experiences that taste like nostalgia</p>
+        </div>
+    </section>
+    
+    <section class="listings">
+        <div class="container">
+            <div class="filter-options">
+                <div class="filter-title">Filter by:</div>
+                <div class="filter-tags">
+                    <span class="filter-tag active">All</span>
+                    <span class="filter-tag">Arcade Cafés</span>
+                    <span class="filter-tag">Retro Diners</span>
+                    <span class="filter-tag">Pixel Pizza</span>
+                    <span class="filter-tag">8-Bit Bars</span>
+                </div>
+            </div>
+            
+            <div class="listing-grid">
+<!-- Wrap all restaurant cards inside a proper container -->
+<div class="listing-grid">
+
+    <!-- Restaurant Card 1 -->
+    <div class="restaurant-card">
+        <img src="images/Gtaste L.jpg" alt="Good Taste" class="restaurant-img">
+        <div class="restaurant-info">
+            <h3>Good Taste</h3>
+            <div class="restaurant-meta">
+                <span class="restaurant-rating">★★★★☆ (5)</span>
+                <span class="restaurant-cuisine">Local</span>
+            </div>
+            <p class="restaurant-description">Famous for its affordable, hearty Chinese-Filipino dishes (try the Buttered Chicken and Lumpia!). Open 24Hrs</p>
+
+            <div class="detail-row">
+                <div class="detail-label">Address:</div>
+                <div class="detail-value">
+                    <a href="https://www.google.com/maps/place/GOODTASTE+RESTAURANT/@16.411748,120.5871541,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a168c625a37d:0x198f476f87d2c588!8m2!3d16.4117429!4d120.592025" target="_blank" class="map-link">
+                        Otek St, Baguio, Benguet
+                    </a>
+                </div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Good Taste Original:</div>
+                <div class="detail-value">
+                    <a href="https://www.google.com/maps/place/The+Original+Good+Taste+Cafe+%26+Restaurant/@16.4165397,120.5941353,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a1677009ce4d:0x3c841beede464917!8m2!3d16.4165346!4d120.5967102" target="_blank">
+                        8 2600 Lapu Lapu St, Baguio, Benguet
+                    </a>
+                </div>
+            </div>
+            <div class="restaurant-links">
+                <a href="https://goodtaste-menu.pammydev.com/" target="_blank" class="menu-link">Check Menu</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Restaurant Card 2 -->
+    <div class="restaurant-card">
+        <img src="images/50s.jpg" alt="50's Diner" class="restaurant-img">
+        <div class="restaurant-info">
+            <h3>50's Diner</h3>
+            <div class="restaurant-meta">
+                <span class="restaurant-rating">★★★★☆ (4.1)</span>
+                <span class="restaurant-cuisine">1950s America</span>
+            </div>
+            <p class="restaurant-description">A throwback to 1950s America, complete with neon lights, red booths, retro posters, and a jukebox-style ambiance. Perfect for that nostalgic diner experience.</p>
+
+            <div class="detail-row">
+                <div class="detail-label">Address:</div>
+                <div class="detail-value">
+                    <a href="https://www.google.com/maps/place/50's+Diner+Porta+Vaga+Mall+session+rd/@16.4118028,120.5981391,21z/data=!4m15!1m8!3m7!1s0x3391a142b0ceb1b5:0xe3779dfe61ef62f8!2s105+Session+Rd,+Baguio,+2602+Benguet!3b1!8m2!3d16.411755!4d120.598029" target="_blank">
+                        105 Session Rd, Baguio, 2600 Benguet
+                    </a>
+                </div>
+            </div>
+            <div class="restaurant-links">
+                <a href="https://www.theblahger.com/2018/04/review-50s-diner-at-session-rd-baguio.html" target="_blank" class="menu-link">Check Menu</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restaurant Card 3 -->
+    <div class="restaurant-card">
+        <img src="images/Ruins.jpg" alt="Café by the Ruins" class="restaurant-img">
+        <div class="restaurant-info">
+            <h3>Café by the Ruins</h3>
+            <div class="restaurant-meta">
+                <span class="restaurant-rating">★★★★☆ (4.8)</span>
+                <span class="restaurant-cuisine">Traditional</span>
+            </div>
+            <p class="restaurant-description">A cozy, rustic cafe built around the actual ruins of a pre-war house. It's artsy, earthy, and full of Baguio soul.</p>
+
+            <div class="detail-row">
+                <div class="detail-label">Address:</div>
+                <div class="detail-value">
+                    <a href="https://www.google.com/maps/place/Caf%C3%A9+by+the+Ruins/@16.412929,120.5867777,17z/data=!3m1!4b1!4m6!3m5!1s0x3391a168a932c641:0x7fed6b7d653057f!8m2!3d16.4129239!4d120.5916486" target="_blank">
+                        25 Shuntug Rd, Baguio, Benguet
+                    </a>
+                </div>
+                </div>
+            </div>
+            <div class="restaurant-links">
+                <a href="https://booky.ph/biz/cafe-by-the-ruins-baguio-city/menu/" target="_blank" class="menu-link">Check Menu</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="about.html">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            
+            <div class="container">
+                <p>&copy; Basta kalbo, walang buhok sa ulo.</p>
+                <p>Shock Knee The Dim</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </footer>
+    
+    <script>
+        // Sample JavaScript for filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterTags = document.querySelectorAll('.filter-tag');
+            
+            filterTags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    // Remove active class from all tags
+                    filterTags.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    
+                    // Here you would typically filter the restaurant listings
+                    // For now we'll just log the filter
+                    console.log(`Filtering by: ${this.textContent}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
